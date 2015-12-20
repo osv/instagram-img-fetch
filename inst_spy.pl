@@ -274,7 +274,7 @@ sub compose_mail {
 <p>
   <b>$_->{title}</b><br/>
   <a href="$_->{inst}">
-    <img src="$_->{img}">
+    <img src="$_->{img}" height="640" width="640">
   </a>
 </p>
 HTML
