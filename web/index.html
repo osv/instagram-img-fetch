@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="utf-8">
+      <title>
+         Instagram images
+      </title>
+   </head>
+   <body>
+     <div class="container-fluid">
+       <h1>Instagram images</h1>
+       <ul id="table" class="list-unstyled row">
+       </ul>       
+     </div>
+   </body>
+   <script src="./vendor/jquery/dist/jquery.min.js"></script>
+   <script src="./vendor/dynatable/jquery.dynatable.js"></script>
+   <script src="./vendor/moment/min/moment.min.js"></script>
+   <link rel="stylesheet" href="./vendor/bootstrap/dist/css/bootstrap.min.css">
+   <link rel="stylesheet" href="./vendor/bootstrap/dist/css/bootstrap-theme.min.css">
+   <script>
+    
+    $( document ).ready(function() {
+      
+      $.get('./maria.json', function(data) {
+        var rows = data.urls.reverse();
+
+        $('#table').dynatable({
+          table: {
+            bodyRowSelector: 'li'
+          },
+          dataset: {
+            records: rows,
+            perPageDefault: 12,
+            perPageOptions: [3, 6, 12, 18, 30, 60, 90, 130]
+          },
+          writers: {
+            _rowWriter: ulWriter
+          },
+          inputs: {
+            paginationClass: 'pagination',
+            paginationLinkClass: '',
+            paginationPrevClass: 'btn btn-prev',
+            paginationNextClass: 'btn btn-next',
+            paginationActiveClass: 'active',
+            paginationDisabledClass: 'disabled',
+          }
+          /* readers: {
+             _rowReader: ulReader
+             }, */
+          /* params: {
+             records: 'kittens'
+             } */
+        });
+
+      });
+       
+      // Function that renders the list items from our records
+      function ulWriter(rowIndex, record, columns, cellWriter) {
+        var cssClass = "col-sm-6 col-md-4",
+            fromNow = moment(record.time).fromNow(),
+            li = '<li class="' + cssClass + '">' +
+                 ' <div class="thumbnail">' +
+                 '   <div>' +
+                 '     <a href="'+ record.inst +'" title="Go to instagram">' +
+                 '      <img class="img-thumbnail img-responsive" src="' + record.l + '">'+
+                 '     </a>' +
+                 '   </div>'+
+                 '   <div class="time pull-right">' + fromNow +
+                 '     <span>' + '<a target="_blank" title="Direct link to instagram" href="'+ record.img +'">img</a></span>'+
+                 '   </div>' +
+                 '   <div class="caption" title="'+ record.title + '">' + record.title + '</div>' +
+                 ' </div>'+
+                 '</li>';
+        return li;
+      }
+
+      // Function that creates our records from the DOM when the page is loaded
+      function ulReader(index, li, record) {
+        var $li = $(li),
+            $caption = $li.find('.caption');
+        record.thumbnail = $li.find('.thumbnail-image').html();
+        record.caption = $caption.html();
+        record.label = $caption.find('h3').text();
+        record.description = $caption.find('p').text();
+        record.color = $li.data('color');
+      }
+
+      console.log('ready');
+    });
+   </script>
+
+   <style type="text/css" media="screen">
+    .caption {
+      line-height: 1em;
+      height: 9em;
+    }
+    .time {
+      line-height: 1em;
+      color: #aaa;
+    }
+   </style>
+</html>
