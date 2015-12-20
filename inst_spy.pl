@@ -144,13 +144,14 @@ main: {
     my $urls    = getImages($html);
     my @updates = appendUrls( $data, $urls );
 
+    link_index_html($OUTPUT_DIR);
+
     if (@updates) {
         fetchImages(@updates);
 
         # set update timestamp and save
         $data->{lastUpdate} = time() * 100;
         save_json( $json_filename, $data );
-
         compose_mail(
             {
                 api_key  => $mandrill_api_key,
@@ -160,6 +161,24 @@ main: {
                 updates  => [@updates]
             }
         ) if defined $NOTIFY_EMAIL;
+    }
+}
+
+# Create symlink to index.html and vendor files in output dir
+sub link_index_html {
+    my $dir = shift;
+    my $cd  = dirname($0);
+
+    foreach my $file (qw(index.html vendor)) {
+        my $src = File::Spec->catfile( $cd, 'web', $file );
+        my $dst = File::Spec->catfile( $dir, $file );
+
+        $src = File::Spec->rel2abs($src);
+        $dst = File::Spec->rel2abs($dst);
+
+        if ( !-e $dst ) {
+            symlink( $src, $dst );
+        }
     }
 }
 
