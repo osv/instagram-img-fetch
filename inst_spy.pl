@@ -16,6 +16,16 @@ inst_spy.pl - Instagram image fetcher
    --email     Email for notify. You should set mandrill api key in env MANDRILL then
    --from      email from, default noreply@nowhere.com
 
+  Example:
+
+  export MANDRILL=1234567890
+  ./inst_spy.pl -word https://downtownie.wordpress.com \
+                -out  ~/spy/ \
+                --email olexandr.syd@gmail.com
+
+
+
+
 =cut
 
 =head1 OPTIONS
