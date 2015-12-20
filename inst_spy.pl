@@ -150,7 +150,7 @@ main: {
         fetchImages(@updates);
 
         # set update timestamp and save
-        $data->{lastUpdate} = time() * 100;
+        $data->{lastUpdate} = time() * 1000;
         save_json( $json_filename, $data );
         compose_mail(
             {
