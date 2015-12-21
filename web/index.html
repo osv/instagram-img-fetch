@@ -60,14 +60,14 @@
         var cssClass = "col-sm-6 col-md-4",
             fromNow = moment(record.time).fromNow(),
             li = '<li class="' + cssClass + '">' +
-                 ' <div class="thumbnail">' +
+                 ' <div class="thumbnail hideoverflow">' +
                  '   <div>' +
                  '     <a href="'+ record.inst +'" title="Go to instagram">' +
                  '      <img class="img-thumbnail img-responsive" src="' + record.l + '">'+
                  '     </a>' +
                  '   </div>'+
                  '   <div class="time pull-right">' + fromNow +
-                 '     <span>' + '<a target="_blank" title="Direct link to instagram" href="'+ record.img +'">img</a></span>'+
+                 '     <span>' + '<a target="_blank" title="Direct link to instagram image" href="'+ record.img +'">img</a></span>'+
                  '   </div>' +
                  '   <div class="caption" title="'+ record.title + '">' + record.title + '</div>' +
                  ' </div>'+
@@ -98,6 +98,9 @@
     .time {
       line-height: 1em;
       color: #aaa;
+    }
+    .hideoverflow {
+      overflow: hidden; 
     }
    </style>
 </html>
