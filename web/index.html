@@ -9,6 +9,7 @@
    <body>
      <div class="container-fluid">
        <h1>Instagram images</h1>
+       <p>Last updated: <span id="updated">Loading...</span></p>
        <ul id="table" class="list-unstyled row">
        </ul>       
      </div>
@@ -23,8 +24,11 @@
     $( document ).ready(function() {
       
       $.get('./maria.json', function(data) {
-        var rows = data.urls.reverse();
+        var rows = data.urls.reverse(),
+            updatedFromNow = moment(data.lastUpdate).fromNow();
 
+        $('#updated').html(updatedFromNow);
+        
         $('#table').dynatable({
           table: {
             bodyRowSelector: 'li'
