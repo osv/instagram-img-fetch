@@ -19,8 +19,8 @@ inst_spy.pl - Instagram image fetcher
   Example:
 
   export MANDRILL=1234567890
-  ./inst_spy.pl -word https://downtownie.wordpress.com \
-                -out  ~/spy/ \
+  ./inst_spy.pl --word https://downtownie.wordpress.com \
+                --out  ~/spy/ \
                 --email olexandr.syd@gmail.com
 
 
