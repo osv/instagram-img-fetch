@@ -184,8 +184,32 @@ sub link_index_html {
 
 sub save_json {
     my ( $json_filename, $data ) = @_;
+
+    $data = uniq_by_file($data);
+
     my $json = JSON::XS->new->pretty(1)->encode($data);
+
     write_file( $json_filename, { binmode => ':utf8' }, $json );
+}
+
+sub uniq_by_file {
+    my $data = shift;
+
+    my @sorted = sort { $b->{time} <=> $a->{time} } @{ $data->{urls} };
+
+    my %seen;
+    my @result;
+
+    foreach my $item (@sorted) {
+        next if $seen{ $item->{l} };
+        $seen{ $item->{l} } = 1;
+
+        push @result, $item;
+    }
+
+    $data->{urls} = \@result;
+
+    return $data;
 }
 
 sub read_json {
@@ -254,6 +278,7 @@ sub getImages {
 }
 
 # Append to property [urls] of $json where urls is obj of {'img', 'title', 'inst'}
+# but only new one.
 sub appendUrls {
     my ( $json, $instagramsImg ) = @_;
     my $jsonUrls = \$json->{urls} || [];
@@ -262,14 +287,15 @@ sub appendUrls {
 
     my %urls;
     foreach my $u ( @{$$jsonUrls} ) {
-        my $url = $u->{img};
+        my $url = basename($u->{img});
         $urls{$url} = 1;
     }
 
     foreach my $masha ( @{$instagramsImg} ) {
-        my $photoUrl = $masha->{img};
+        my $photoUrl = basename($masha->{img});
         next if ( exists $urls{$photoUrl} );
 
+        # add timestamp to this
         $masha->{time} = $now;
         push @toAppend, $masha;
     }
