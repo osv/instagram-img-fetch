@@ -230,6 +230,7 @@ sub fetchImages {
             if ( defined $content ) {
                 print "Ok $url\n";
                 my $filename = basename $url;
+                $filename =~s/\?.*//g;
                 my $filepath = File::Spec->catfile( $img_dir, $filename );
                 write_file( $filepath, $content );
                 last;
@@ -259,6 +260,7 @@ sub getImages {
         if ( $a_body =~ m/<img[^>]+src="([^"]+)"/ ) {
             my $url      = $1;
             my $filename = basename($url);
+            $filename =~s/\?.*//g;
             my $loc_img  = File::Spec->catfile( IMG_DIR, $filename );
             my ($title)  = $a_body =~ m|title="([^"]+)"|;
             $title |= '';
