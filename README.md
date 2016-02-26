@@ -1,7 +1,7 @@
 
 Nothing interesting here for your but  usefull for me script that scan
 html for instagram images and download  them. I have no instagram, but
-want to spy for someone.
+want to spy for someone. Also this is my RiotJS practice.
 
 # Install how-to
 

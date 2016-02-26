@@ -169,7 +169,7 @@ sub link_index_html {
     my $dir = shift;
     my $cd  = dirname($0);
 
-    foreach my $file (qw(index.html vendor)) {
+    foreach my $file (qw(index.html tags)) {
         my $src = File::Spec->catfile( $cd, 'web', $file );
         my $dst = File::Spec->catfile( $dir, $file );
 
