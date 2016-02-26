@@ -16,7 +16,7 @@
     <div class="col-sm-6 col-md-4" each={ itemsToDisplay }>
       <div class="thumbnail hideoverflow">
         <div>
-          <a href={ img } title="Go to instagram">
+          <a href={ l } target="_blank" title="Go to instagram">
             <img class="img-thumbnail img-responsive"
                  src={ l }>
           </a>
