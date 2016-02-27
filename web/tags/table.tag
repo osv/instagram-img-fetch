@@ -104,8 +104,9 @@
 
 <!-- convert 'date' to str from now -->
 <my-from-now>
-  <span>{date}</span>
+  <span title={ formatDate }>{ date }</span>
   <script>
-    this.date = moment(opts.date).fromNow()
+    this.date = moment(opts.date).fromNow();
+    this.formatDate = moment(opts.date).format('DD-MM-YYYY (dddd)')
   </script>
 </my-from-now>
